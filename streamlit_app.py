@@ -1,6 +1,9 @@
 import streamlit as st
 import math
 
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+
+
 def initialize_state():
     if 'low_value' not in st.session_state:
         st.session_state['low_value'] = 0
@@ -19,6 +22,8 @@ def initialize_state():
         st.session_state['prev_low'] = 0
     if 'prev_high' not in st.session_state:
         st.session_state['prev_high'] = 0
+    
+
 
 def start_game():
     st.session_state['low_value'] = int(st.session_state['low_value_input'])
@@ -60,7 +65,7 @@ st.session_state['high_value_input'] = st.sidebar.number_input("High Value", min
 
 st.sidebar.button("Start Game", on_click=start_game)
 
-st.title("Binary Number Search")
+st.title("Binary Search")
 st.caption("by jeffix")
 
 if not st.session_state['game_started']:
@@ -68,23 +73,29 @@ if not st.session_state['game_started']:
 else:
     #st.write(f"Range: {st.session_state['low_value']} - {st.session_state['high_value']}")
 
-    col1, col2 = st.columns(2)
+    
+
     lowdelta = st.session_state['low_value'] - st.session_state['prev_low']
     if lowdelta == 0:
         lowdelta = None
     highdelta = st.session_state['high_value'] - st.session_state['prev_high']
     if highdelta == 0:
         highdelta = None
-    col1.metric("Low Value", st.session_state['low_value'], lowdelta)
-    col2.metric("High Value", st.session_state['high_value'], highdelta)
+    col1, col2 = st.columns([1,1],gap="small",vertical_alignment="top")
+    with col1:
+        st.metric("Low Value", st.session_state['low_value'], lowdelta)
+    
+    with col2:
+        st.metric("High Value", st.session_state['high_value'], highdelta)
 
 
-    st.write(f"Attempts: {st.session_state['attempts']} / {st.session_state['max_attempts']}")
+    st.write(f"Attempt {st.session_state['attempts']} of total {st.session_state['max_attempts']} possible")
+
     #st.latex(st.session_state['latexattempts'])
     #st.markdown(f"Next Guess: :blue[{st.session_state['correct']}]")
 
     st.metric("Next Attempt:", st.session_state['correct'],"")
 
-    st.button("This number was :red[Higher] than the correct number", on_click=process_guess, args=('H',))
-    st.button("This number was :red[Lower] than the correct number", on_click=process_guess, args=('L',))
+    st.button("This number was :red[Higher]", on_click=process_guess, args=('H',))
+    st.button("This number was :red[Lower]", on_click=process_guess, args=('L',))
     st.button("Reset", on_click=process_guess, args=('R',))
