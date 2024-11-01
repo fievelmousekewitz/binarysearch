@@ -76,26 +76,21 @@ else:
     
 
     lowdelta = st.session_state['low_value'] - st.session_state['prev_low']
-    if lowdelta == 0:
-        lowdelta = None
+
     highdelta = st.session_state['high_value'] - st.session_state['prev_high']
-    if highdelta == 0:
-        highdelta = None
-    col1, col2 = st.columns([1,1],gap="small",vertical_alignment="top")
-    with col1:
-        st.metric("Low Value", st.session_state['low_value'], lowdelta)
+    #st.metric("Low Value", st.session_state['low_value'], lowdelta)
+    #st.metric("High Value", st.session_state['high_value'], highdelta)
+    st.header(f"Range: {st.session_state['low_value']} - {st.session_state['high_value']}")
     
-    with col2:
-        st.metric("High Value", st.session_state['high_value'], highdelta)
-
-
-    st.write(f"Attempt {st.session_state['attempts']} of total {st.session_state['max_attempts']} possible")
-
+    remain = st.session_state['max_attempts'] - st.session_state['attempts']
+    st.caption(f"Attempt {st.session_state['attempts']} of total {st.session_state['max_attempts']} possible\nYou need :orange[{remain}] more attempts to succeed")
+    
     #st.latex(st.session_state['latexattempts'])
     #st.markdown(f"Next Guess: :blue[{st.session_state['correct']}]")
 
-    st.metric("Next Attempt:", st.session_state['correct'],"")
-
-    st.button("This number was :red[Higher]", on_click=process_guess, args=('H',))
-    st.button("This number was :red[Lower]", on_click=process_guess, args=('L',))
+    st.header(f"Midpoint: :blue[{st.session_state['correct']}]")
+    st.divider()
+    st.button("This number was :red[HIGHER]", on_click=process_guess, args=('H',))
+    st.button("This number was :red[LOWER]", on_click=process_guess, args=('L',))
+    st.divider()
     st.button("Reset", on_click=process_guess, args=('R',))
