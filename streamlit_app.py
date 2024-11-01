@@ -1,7 +1,7 @@
 import streamlit as st
 import math
 
-st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Binary Search",layout="wide", initial_sidebar_state="expanded")
 
 
 def initialize_state():
@@ -63,7 +63,7 @@ st.session_state['low_value_input'] = st.sidebar.number_input("Low Value", min_v
 st.session_state['high_value_input'] = st.sidebar.number_input("High Value", min_value=0, value=100)
 
 
-st.sidebar.button("Start Game", on_click=start_game)
+st.sidebar.button("Start Search", on_click=start_game)
 
 st.title("Binary Search")
 st.caption("by jeffix")
