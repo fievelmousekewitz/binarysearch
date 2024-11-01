@@ -65,6 +65,8 @@ st.title("Guessing Game")
 if not st.session_state['game_started']:
     st.write("Please set up the game in the sidebar.")
 if st.session_state['game_started']:
+    st.write(f"Range: {st.session_state['low_value']} - {st.session_state['high_value']}")
+             
     st.write(f"Attempts: {st.session_state['attempts']} / {st.session_state['max_attempts']}")
     st.write(f"Is your number {st.session_state['correct']}?")
 
