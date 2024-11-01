@@ -37,24 +37,21 @@ def process_guess(response):
 
 initialize_state()
 
-st.sidebar.title("Game Setup")
+st.sidebar.title("Search Setup")
 st.session_state['low_value_input'] = st.sidebar.number_input("Low Value", min_value=0, value=0)
 st.session_state['high_value_input'] = st.sidebar.number_input("High Value", min_value=0, value=100)
 
 st.sidebar.button("Start Game", on_click=start_game)
 
-st.title("Guessing Game")
+st.title("Binary Number Search")
+st.caption("by jeffix")
 
 if not st.session_state['game_started']:
-    st.write("Please set up the game in the sidebar.")
+    st.write("Please setup values in the left sidebar.")
 else:
     st.write(f"Range: {st.session_state['low_value']} - {st.session_state['high_value']}")
     st.write(f"Attempts: {st.session_state['attempts']} / {st.session_state['max_attempts']}")
-    st.write(f"Is your number {st.session_state['correct']}?")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.button("Higher", on_click=process_guess, args=('H',))
-    with col2:
-        st.button("Lower", on_click=process_guess, args=('L',))
-    with col3:
-        st.button("Restart", on_click=process_guess, args=('R',))
+    st.markdown(f"Next Guess: :blue[{st.session_state['correct']}]")
+    st.button("This number was :red[Higher]", on_click=process_guess, args=('H',))
+    st.button("This number was :red[Lower]", on_click=process_guess, args=('L',))
+    st.button("Restart", on_click=process_guess, args=('R',))
